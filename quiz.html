@@ -1,0 +1,842 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>EAR LAB - Quanto Stai Perdendo?</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            background: #000;
+            color: #fff;
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 2rem;
+        }
+
+        .container {
+            max-width: 800px;
+            width: 100%;
+        }
+
+        /* Header */
+        .header {
+            text-align: center;
+            margin-bottom: 3rem;
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 1rem;
+            margin-bottom: 2rem;
+        }
+
+        .logo-icon {
+            width: 50px;
+            height: 50px;
+        }
+
+        .logo-text {
+            font-size: 2rem;
+            font-weight: 900;
+            background: linear-gradient(135deg, #d4af37, #f4e5b0);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        h1 {
+            font-size: 2.5rem;
+            font-weight: 900;
+            margin-bottom: 1rem;
+            line-height: 1.2;
+        }
+
+        .gradient-text {
+            background: linear-gradient(135deg, #d4af37, #f4e5b0);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .subtitle {
+            font-size: 1.1rem;
+            color: #888;
+        }
+
+        /* Progress Bar */
+        .progress-container {
+            margin-bottom: 3rem;
+        }
+
+        .progress-bar {
+            width: 100%;
+            height: 8px;
+            background: rgba(212, 175, 55, 0.2);
+            border-radius: 10px;
+            overflow: hidden;
+            margin-bottom: 1rem;
+        }
+
+        .progress-fill {
+            height: 100%;
+            background: linear-gradient(90deg, #d4af37, #f4e5b0);
+            transition: width 0.5s ease;
+        }
+
+        .progress-text {
+            text-align: center;
+            color: #d4af37;
+            font-weight: 600;
+            font-size: 0.9rem;
+        }
+
+        /* Question Card */
+        .question-card {
+            background: linear-gradient(135deg, #1a1a1a, #0a0a0a);
+            border: 2px solid rgba(212, 175, 55, 0.3);
+            border-radius: 20px;
+            padding: 3rem;
+            margin-bottom: 2rem;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.5);
+        }
+
+        .question-emoji {
+            font-size: 4rem;
+            text-align: center;
+            margin-bottom: 1.5rem;
+        }
+
+        .question-title {
+            font-size: 1.8rem;
+            font-weight: 700;
+            margin-bottom: 1rem;
+            text-align: center;
+            color: #d4af37;
+        }
+
+        .question-text {
+            font-size: 1.2rem;
+            margin-bottom: 2rem;
+            text-align: center;
+            color: #ccc;
+            line-height: 1.6;
+        }
+
+        /* Options */
+        .options {
+            display: grid;
+            gap: 1rem;
+        }
+
+        .option {
+            padding: 1.5rem;
+            background: rgba(26, 26, 26, 0.5);
+            border: 2px solid rgba(212, 175, 55, 0.2);
+            border-radius: 15px;
+            cursor: pointer;
+            transition: all 0.3s;
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+        }
+
+        .option:hover {
+            border-color: #d4af37;
+            background: rgba(212, 175, 55, 0.1);
+            transform: translateX(10px);
+        }
+
+        .option-emoji {
+            font-size: 2rem;
+            flex-shrink: 0;
+        }
+
+        .option-text {
+            font-size: 1.1rem;
+            font-weight: 500;
+        }
+
+        /* Results */
+        .results {
+            display: none;
+        }
+
+        .results.active {
+            display: block;
+        }
+
+        .result-card {
+            background: linear-gradient(135deg, rgba(212, 175, 55, 0.2), rgba(212, 175, 55, 0.05));
+            border: 2px solid #d4af37;
+            border-radius: 20px;
+            padding: 3rem;
+            margin-bottom: 2rem;
+        }
+
+        .result-title {
+            font-size: 2.5rem;
+            font-weight: 900;
+            text-align: center;
+            margin-bottom: 2rem;
+            color: #d4af37;
+        }
+
+        .total-loss {
+            text-align: center;
+            margin-bottom: 3rem;
+        }
+
+        .total-loss-label {
+            font-size: 1rem;
+            color: #aaa;
+            margin-bottom: 0.5rem;
+        }
+
+        .total-loss-amount {
+            font-size: 5rem;
+            font-weight: 900;
+            color: #ef4444;
+            line-height: 1;
+            margin-bottom: 0.5rem;
+        }
+
+        .total-loss-period {
+            font-size: 1.2rem;
+            color: #888;
+        }
+
+        .problems-list {
+            background: rgba(0, 0, 0, 0.3);
+            border-radius: 15px;
+            padding: 2rem;
+            margin-bottom: 2rem;
+        }
+
+        .problems-list h3 {
+            font-size: 1.5rem;
+            margin-bottom: 1.5rem;
+            color: #d4af37;
+        }
+
+        .problem-item {
+            padding: 1.5rem;
+            background: rgba(26, 26, 26, 0.5);
+            border-left: 4px solid #ef4444;
+            border-radius: 10px;
+            margin-bottom: 1rem;
+        }
+
+        .problem-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: start;
+            margin-bottom: 0.5rem;
+            flex-wrap: wrap;
+            gap: 1rem;
+        }
+
+        .problem-name {
+            font-weight: 700;
+            font-size: 1.1rem;
+        }
+
+        .problem-cost {
+            color: #ef4444;
+            font-weight: 900;
+            font-size: 1.3rem;
+        }
+
+        .problem-description {
+            color: #aaa;
+            font-size: 0.95rem;
+            margin-bottom: 1rem;
+        }
+
+        .solution {
+            background: rgba(212, 175, 55, 0.1);
+            border: 1px solid rgba(212, 175, 55, 0.3);
+            border-radius: 10px;
+            padding: 1rem;
+            margin-top: 1rem;
+        }
+
+        .solution-header {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            margin-bottom: 0.5rem;
+            font-weight: 700;
+            color: #d4af37;
+        }
+
+        .solution-text {
+            color: #ccc;
+            font-size: 0.9rem;
+        }
+
+        .solution-savings {
+            margin-top: 0.5rem;
+            font-weight: 700;
+            color: #22c55e;
+        }
+
+        .cta-section {
+            background: linear-gradient(135deg, #d4af37, #c19b2a);
+            border-radius: 20px;
+            padding: 3rem;
+            text-align: center;
+            color: #000;
+        }
+
+        .cta-section h2 {
+            font-size: 2rem;
+            margin-bottom: 1rem;
+        }
+
+        .cta-section p {
+            font-size: 1.2rem;
+            margin-bottom: 2rem;
+            opacity: 0.9;
+        }
+
+        .btn {
+            padding: 1.25rem 2.5rem;
+            border: none;
+            border-radius: 15px;
+            font-weight: 900;
+            font-size: 1.2rem;
+            cursor: pointer;
+            transition: all 0.3s;
+            display: inline-block;
+            text-decoration: none;
+        }
+
+        .btn-primary {
+            background: #000;
+            color: #d4af37;
+        }
+
+        .btn-primary:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+        }
+
+        .restart-btn {
+            display: block;
+            width: fit-content;
+            margin: 2rem auto 0;
+            background: transparent;
+            border: 2px solid #d4af37;
+            color: #d4af37;
+            padding: 1rem 2rem;
+            font-size: 1rem;
+        }
+
+        .restart-btn:hover {
+            background: rgba(212, 175, 55, 0.1);
+        }
+
+        /* Animations */
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .question-card, .result-card {
+            animation: fadeIn 0.5s ease;
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            body {
+                padding: 1rem;
+            }
+
+            h1 {
+                font-size: 2rem;
+            }
+
+            .question-card, .result-card {
+                padding: 2rem 1.5rem;
+            }
+
+            .question-title {
+                font-size: 1.5rem;
+            }
+
+            .question-text {
+                font-size: 1rem;
+            }
+
+            .total-loss-amount {
+                font-size: 3.5rem;
+            }
+
+            .option {
+                padding: 1rem;
+            }
+
+            .option-text {
+                font-size: 1rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <!-- Header -->
+        <div class="header">
+            <div class="logo">
+                <svg class="logo-icon" viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
+                    <defs>
+                        <linearGradient id="logoGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+                            <stop offset="0%" style="stop-color:#d4af37"/>
+                            <stop offset="50%" style="stop-color:#f4e5b0"/>
+                            <stop offset="100%" style="stop-color:#d4af37"/>
+                        </linearGradient>
+                    </defs>
+                    <circle cx="50" cy="50" r="48" fill="none" stroke="url(#logoGrad)" stroke-width="2" opacity="0.3"/>
+                    <path d="M 50 50 Q 50 35, 35 35 T 20 35 Q 20 50, 35 50 T 65 50 Q 65 20, 35 20 T 10 20 Q 10 80, 60 80 T 90 80 Q 90 10, 35 10" 
+                          stroke="url(#logoGrad)" 
+                          stroke-width="3" 
+                          fill="none"
+                          stroke-linecap="round"/>
+                </svg>
+                <div class="logo-text">EAR LAB</div>
+            </div>
+            <h1>Quanto stai <span class="gradient-text">perdendo</span> ogni mese?</h1>
+            <p class="subtitle">Scopri i costi nascosti della tua attività in 2 minuti</p>
+        </div>
+
+        <!-- Progress Bar -->
+        <div class="progress-container" id="progressContainer" style="display: none;">
+            <div class="progress-bar">
+                <div class="progress-fill" id="progressFill"></div>
+            </div>
+            <div class="progress-text" id="progressText">Domanda 1 di 6</div>
+        </div>
+
+        <!-- Questions -->
+        <div id="quiz">
+            <!-- Questions will be inserted here by JavaScript -->
+        </div>
+
+        <!-- Results -->
+        <div id="results" class="results">
+            <!-- Results will be inserted here by JavaScript -->
+        </div>
+    </div>
+
+    <script>
+        const questions = [
+            {
+                id: 'communication',
+                emoji: '💬',
+                title: 'Comunicazione Team',
+                text: 'Come comunica il tuo team durante il lavoro?',
+                options: [
+                    { text: 'WhatsApp personale di tutti', problem: 'whatsapp_personal', cost: 215 },
+                    { text: 'Chiamate e SMS', problem: 'calls_sms', cost: 150 },
+                    { text: 'Email (lente e disperse)', problem: 'email_slow', cost: 180 },
+                    { text: 'Urla da un negozio all\'altro 😅', problem: 'shouting', cost: 100 }
+                ]
+            },
+            {
+                id: 'tasks',
+                emoji: '📋',
+                title: 'Gestione Task',
+                text: 'Come assegni e monitori le task quotidiane?',
+                options: [
+                    { text: 'A voce, ogni mattina', problem: 'verbal_tasks', cost: 250 },
+                    { text: 'Foglio di carta/lavagna', problem: 'paper_tasks', cost: 200 },
+                    { text: 'Messaggi sparsi su WhatsApp', problem: 'whatsapp_tasks', cost: 180 },
+                    { text: 'Nella mia testa (e me ne dimentico metà)', problem: 'mental_tasks', cost: 300 }
+                ]
+            },
+            {
+                id: 'motivation',
+                emoji: '🎯',
+                title: 'Motivazione Team',
+                text: 'Come motivi i tuoi dipendenti?',
+                options: [
+                    { text: 'Solo stipendio fisso', problem: 'no_motivation', cost: 400 },
+                    { text: 'Promesse di bonus (mai formalizzati)', problem: 'vague_promises', cost: 350 },
+                    { text: 'Ogni tanto un complimento', problem: 'occasional_praise', cost: 300 },
+                    { text: 'Minacce di licenziamento 😬', problem: 'threats', cost: 500 }
+                ]
+            },
+            {
+                id: 'customers',
+                emoji: '👥',
+                title: 'Gestione Clienti',
+                text: 'Come gestisci il database clienti e il marketing?',
+                options: [
+                    { text: 'Rubrica telefono (un casino)', problem: 'phone_contacts', cost: 320 },
+                    { text: 'Excel (mai aggiornato)', problem: 'excel_outdated', cost: 280 },
+                    { text: 'Carta fedeltà fisica (metà persa)', problem: 'paper_loyalty', cost: 250 },
+                    { text: 'Nessun database, a memoria', problem: 'no_database', cost: 400 }
+                ]
+            },
+            {
+                id: 'files',
+                emoji: '📁',
+                title: 'Condivisione File',
+                text: 'Come condividi documenti, foto prodotti, listini?',
+                options: [
+                    { text: 'WhatsApp (poi si perdono)', problem: 'whatsapp_files', cost: 150 },
+                    { text: 'Email (versioni dappertutto)', problem: 'email_versions', cost: 180 },
+                    { text: 'Chiavetta USB che gira', problem: 'usb_stick', cost: 100 },
+                    { text: 'Ognuno ha la sua copia (tutte diverse)', problem: 'multiple_versions', cost: 200 }
+                ]
+            },
+            {
+                id: 'website',
+                emoji: '🌐',
+                title: 'Presenza Online',
+                text: 'Che presenza online hai?',
+                options: [
+                    { text: 'Nessun sito web', problem: 'no_website', cost: 350 },
+                    { text: 'Sito vecchio, mai aggiornato', problem: 'old_website', cost: 300 },
+                    { text: 'Solo Facebook (quando mi ricordo)', problem: 'only_facebook', cost: 250 },
+                    { text: 'Per modificare il sito pago ogni volta', problem: 'expensive_updates', cost: 200 }
+                ]
+            }
+        ];
+
+        const problems = {
+            whatsapp_personal: {
+                name: 'WhatsApp Personale per Lavoro',
+                description: 'Confusione vita/lavoro, messaggi persi, nessuna privacy, informazioni aziendali su dispositivi personali.',
+                solution: 'Chat Team',
+                solutionDescription: 'App dedicata con crittografia, separazione lavoro/vita, backup automatico, GDPR compliant.',
+                cost: 215,
+                savings: 'Risparmi €215/mese + migliore benessere team'
+            },
+            calls_sms: {
+                name: 'Comunicazione con Chiamate',
+                description: 'Interruzioni continue, nessuna traccia scritta, impossibile comunicare con tutti contemporaneamente.',
+                solution: 'Chat Team',
+                solutionDescription: 'Messaggistica istantanea, broadcast, condivisione file, check-in digitale.',
+                cost: 150,
+                savings: 'Risparmi €150/mese + comunicazione 10x più efficiente'
+            },
+            email_slow: {
+                name: 'Email per Comunicazione Interna',
+                description: 'Lente, formali, si perdono, impossibile per comunicazioni urgenti.',
+                solution: 'Chat Team',
+                solutionDescription: 'Real-time, informale ma tracciata, priorità per urgenze.',
+                cost: 180,
+                savings: 'Risparmi €180/mese + velocità 50x'
+            },
+            shouting: {
+                name: 'Comunicazione Verbale',
+                description: 'Nessuna traccia, malintesi, impossibile se non siete nello stesso posto.',
+                solution: 'Chat Team',
+                solutionDescription: 'Tutto tracciato, chiaro, funziona ovunque.',
+                cost: 100,
+                savings: 'Risparmi €100/mese + professionalità'
+            },
+            verbal_tasks: {
+                name: 'Task Assegnate a Voce',
+                description: 'Dimenticate, non verificabili, nessun accountability, ripetizioni continue.',
+                solution: 'Maestro Negozio',
+                solutionDescription: 'Task digitali, assegnazione automatica, tracking completamento, notifiche.',
+                cost: 250,
+                savings: 'Risparmi €250/mese + zero task dimenticate'
+            },
+            paper_tasks: {
+                name: 'Task su Carta',
+                description: 'Si perdono, non aggiornabili in tempo reale, nessuna analytics.',
+                solution: 'Maestro Negozio',
+                solutionDescription: 'Digitale, real-time, report automatici, analytics.',
+                cost: 200,
+                savings: 'Risparmi €200/mese + visibilità completa'
+            },
+            whatsapp_tasks: {
+                name: 'Task su WhatsApp',
+                description: 'Si perdono tra i messaggi, nessuna organizzazione, caos totale.',
+                solution: 'Maestro Negozio',
+                solutionDescription: 'Sistema dedicato task, priorità, deadline, completamento.',
+                cost: 180,
+                savings: 'Risparmi €180/mese + organizzazione perfetta'
+            },
+            mental_tasks: {
+                name: 'Task "Nella Testa"',
+                description: 'Il 50% dimenticato, stress del titolare, errori continui.',
+                solution: 'Maestro Negozio',
+                solutionDescription: 'Sistema che ricorda tutto, notifiche automatiche, zero stress.',
+                cost: 300,
+                savings: 'Risparmi €300/mese + salute mentale'
+            },
+            no_motivation: {
+                name: 'Nessun Sistema Motivazionale',
+                description: 'Bassa produttività, turnover alto, team demotivato.',
+                solution: 'Maestro Negozio',
+                solutionDescription: 'Gamification, punti, livelli, leaderboard, riconoscimenti.',
+                cost: 400,
+                savings: 'Risparmi €400/mese + produttività +20%'
+            },
+            vague_promises: {
+                name: 'Promesse Non Mantenute',
+                description: 'Perdita di fiducia, demotivazione, "tanto non mi danno nulla".',
+                solution: 'Maestro Negozio',
+                solutionDescription: 'Sistema punti trasparente, premi automatici, tutto tracciato.',
+                cost: 350,
+                savings: 'Risparmi €350/mese + fiducia ricostruita'
+            },
+            occasional_praise: {
+                name: 'Feedback Occasionale',
+                description: 'Non costante, percepito come favoritismo, nessuna misura oggettiva.',
+                solution: 'Maestro Negozio',
+                solutionDescription: 'Feedback anonimo, metriche oggettive, riconoscimenti automatici.',
+                cost: 300,
+                savings: 'Risparmi €300/mese + team più unito'
+            },
+            threats: {
+                name: 'Motivazione Negativa',
+                description: 'Ambiente tossico, turnover altissimo, produttività bassissima.',
+                solution: 'Maestro Negozio',
+                solutionDescription: 'Motivazione positiva, crescita, riconoscimenti, benessere.',
+                cost: 500,
+                savings: 'Risparmi €500/mese + ambiente sano'
+            },
+            phone_contacts: {
+                name: 'Clienti in Rubrica',
+                description: 'Impossibile segmentare, marketing impossibile, si perdono.',
+                solution: 'WhatsApp Marketing + Premi & Promo',
+                solutionDescription: 'Database organizzato, campagne automatiche, fidelizzazione.',
+                cost: 320,
+                savings: 'Risparmi €320/mese + vendite +15%'
+            },
+            excel_outdated: {
+                name: 'Excel Mai Aggiornato',
+                description: 'Dati vecchi, impossibile usarlo, nessuno lo aggiorna.',
+                solution: 'WhatsApp Marketing + Premi & Promo',
+                solutionDescription: 'Sistema automatico, sempre aggiornato, analytics real-time.',
+                cost: 280,
+                savings: 'Risparmi €280/mese + dati affidabili'
+            },
+            paper_loyalty: {
+                name: 'Carte Fedeltà Cartacee',
+                description: 'Persa metà, nessun dato, impossibile analizzare.',
+                solution: 'Premi & Promo',
+                solutionDescription: 'Carte digitali, QR code, analytics comportamento clienti.',
+                cost: 250,
+                savings: 'Risparmi €250/mese + retention +25%'
+            },
+            no_database: {
+                name: 'Nessun Database Clienti',
+                description: 'Perdi clienti continuamente, nessuna retention, zero marketing.',
+                solution: 'WhatsApp Marketing + Premi & Promo',
+                solutionDescription: 'Database completo, campagne automatiche, fidelizzazione attiva.',
+                cost: 400,
+                savings: 'Risparmi €400/mese + recupero clienti persi'
+            },
+            whatsapp_files: {
+                name: 'File su WhatsApp',
+                description: 'Si perdono dopo 30 giorni, impossibile trovare, versioni multiple.',
+                solution: 'Drive Aziendale',
+                solutionDescription: '100GB storage, versioning, ricerca, condivisione controllata.',
+                cost: 150,
+                savings: 'Risparmi €150/mese + niente più "non trovo il file"'
+            },
+            email_versions: {
+                name: 'File via Email',
+                description: 'Versioni ovunque, quale è quella giusta? Caos totale.',
+                solution: 'Drive Aziendale',
+                solutionDescription: 'Versione unica, storico modifiche, sempre la versione giusta.',
+                cost: 180,
+                savings: 'Risparmi €180/mese + zero confusione'
+            },
+            usb_stick: {
+                name: 'Chiavetta USB',
+                description: 'Persa metà delle volte, virus, lentissima, obsoleta.',
+                solution: 'Drive Aziendale',
+                solutionDescription: 'Cloud, sicuro, veloce, accesso ovunque.',
+                cost: 100,
+                savings: 'Risparmi €100/mese + sicurezza dati'
+            },
+            multiple_versions: {
+                name: 'Copie Multiple Diverse',
+                description: 'Nessuno sa quale è quella giusta, errori continui.',
+                solution: 'Drive Aziendale',
+                solutionDescription: 'Fonte unica di verità, permessi, sempre aggiornata.',
+                cost: 200,
+                savings: 'Risparmi €200/mese + errori azzerati'
+            },
+            no_website: {
+                name: 'Nessun Sito Web',
+                description: 'Perdi clienti che cercano online, sembri poco professionale.',
+                solution: 'Sito Web Standard',
+                solutionDescription: 'Sito professionale, SEO, blog, modifiche incluse.',
+                cost: 350,
+                savings: 'Risparmi €350/mese + nuovi clienti da Google'
+            },
+            old_website: {
+                name: 'Sito Vecchio',
+                description: 'Fa schifo, clienti scappano, non è mobile, SEO zero.',
+                solution: 'Sito Web Standard',
+                solutionDescription: 'Sito moderno, responsive, veloce, SEO ottimizzato.',
+                cost: 300,
+                savings: 'Risparmi €300/mese + credibilità recuperata'
+            },
+            only_facebook: {
+                name: 'Solo Social (quando ti ricordi)',
+                description: 'Non sei trovabile su Google, dipendi da Facebook, amatoriale.',
+                solution: 'Sito Web Standard',
+                solutionDescription: 'Presenza web professionale, SEO, indipendente da social.',
+                cost: 250,
+                savings: 'Risparmi €250/mese + visibilità Google'
+            },
+            expensive_updates: {
+                name: 'Modifiche Sito Carissime',
+                description: '€300-500 ogni volta che devi cambiare una parola.',
+                solution: 'Sito Web Standard',
+                solutionDescription: 'Modifiche ricorrenti incluse, paghi fisso €200/mese.',
+                cost: 200,
+                savings: 'Risparmi €200/mese + modifiche illimitate'
+            }
+        };
+
+        let currentQuestion = 0;
+        let userProblems = [];
+        let totalCost = 0;
+
+        function startQuiz() {
+            document.getElementById('progressContainer').style.display = 'block';
+            showQuestion(0);
+        }
+
+        function showQuestion(index) {
+            currentQuestion = index;
+            const question = questions[index];
+            
+            // Update progress
+            const progress = ((index + 1) / questions.length) * 100;
+            document.getElementById('progressFill').style.width = progress + '%';
+            document.getElementById('progressText').textContent = `Domanda ${index + 1} di ${questions.length}`;
+            
+            // Show question
+            const quizDiv = document.getElementById('quiz');
+            quizDiv.innerHTML = `
+                <div class="question-card">
+                    <div class="question-emoji">${question.emoji}</div>
+                    <h2 class="question-title">${question.title}</h2>
+                    <p class="question-text">${question.text}</p>
+                    <div class="options">
+                        ${question.options.map((option, i) => `
+                            <div class="option" onclick="selectOption(${index}, ${i})">
+                                <span class="option-emoji">${i === 0 ? '😰' : i === 1 ? '😐' : i === 2 ? '😅' : '💀'}</span>
+                                <span class="option-text">${option.text}</span>
+                            </div>
+                        `).join('')}
+                    </div>
+                </div>
+            `;
+        }
+
+        function selectOption(questionIndex, optionIndex) {
+            const question = questions[questionIndex];
+            const option = question.options[optionIndex];
+            
+            userProblems.push(option.problem);
+            totalCost += option.cost;
+            
+            if (currentQuestion < questions.length - 1) {
+                showQuestion(currentQuestion + 1);
+            } else {
+                showResults();
+            }
+        }
+
+        function showResults() {
+            document.getElementById('progressContainer').style.display = 'none';
+            document.getElementById('quiz').style.display = 'none';
+            
+            const resultsDiv = document.getElementById('results');
+            resultsDiv.classList.add('active');
+            
+            // Calculate recommended services
+            const recommendedServices = new Set();
+            const problemDetails = userProblems.map(p => {
+                const prob = problems[p];
+                recommendedServices.add(prob.solution);
+                return prob;
+            });
+            
+            const totalSavings = problemDetails.reduce((sum, p) => sum + p.cost, 0);
+            const yearlyLoss = totalCost * 12;
+            
+            resultsDiv.innerHTML = `
+                <div class="result-card">
+                    <h2 class="result-title">💸 Il Tuo Report</h2>
+                    
+                    <div class="total-loss">
+                        <div class="total-loss-label">Stai perdendo circa</div>
+                        <div class="total-loss-amount">€${totalCost.toLocaleString()}</div>
+                        <div class="total-loss-period">al mese = <strong>€${yearlyLoss.toLocaleString()}/anno</strong></div>
+                    </div>
+                    
+                    <div class="problems-list">
+                        <h3>🔴 I Tuoi Problemi Principali:</h3>
+                        ${problemDetails.map(prob => `
+                            <div class="problem-item">
+                                <div class="problem-header">
+                                    <div class="problem-name">${prob.name}</div>
+                                    <div class="problem-cost">-€${prob.cost}/mese</div>
+                                </div>
+                                <div class="problem-description">${prob.description}</div>
+                                <div class="solution">
+                                    <div class="solution-header">
+                                        ✅ Soluzione: ${prob.solution}
+                                    </div>
+                                    <div class="solution-text">${prob.solutionDescription}</div>
+                                    <div class="solution-savings">${prob.savings}</div>
+                                </div>
+                            </div>
+                        `).join('')}
+                    </div>
+                    
+                    <div class="cta-section">
+                        <h2>🚀 Recupera €${totalCost}/mese</h2>
+                        <p>
+                            Con EAR LAB risolvi tutti questi problemi.<br>
+                            <strong>Investimento: molto meno di quanto stai perdendo ora.</strong>
+                        </p>
+                        <button class="btn btn-primary" onclick="window.location.href='launch.html'">
+                            Vedi le Soluzioni →
+                        </button>
+                        <p style="margin-top: 1.5rem; font-size: 0.95rem;">
+                            ✓ 7 giorni gratis • ✓ Nessuna carta richiesta • ✓ Prezzi bloccati per sempre
+                        </p>
+                    </div>
+                </div>
+                
+                <button class="btn restart-btn" onclick="location.reload()">
+                    🔄 Rifai il Test
+                </button>
+            `;
+        }
+
+        // Start quiz on load
+        window.onload = startQuiz;
+    </script>
+</body>
+</html>
