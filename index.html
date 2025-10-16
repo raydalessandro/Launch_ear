@@ -1,0 +1,474 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>EAR LAB - Quanto Stai Perdendo Ogni Mese?</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            background: #000;
+            color: #fff;
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            overflow: hidden;
+            position: relative;
+        }
+
+        /* Animated Background */
+        .bg-animation {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: 0;
+            opacity: 0.15;
+        }
+
+        .circle {
+            position: absolute;
+            border-radius: 50%;
+            background: radial-gradient(circle, rgba(212, 175, 55, 0.4), transparent);
+            filter: blur(60px);
+            animation: float 30s infinite ease-in-out;
+        }
+
+        .circle:nth-child(1) {
+            width: 400px;
+            height: 400px;
+            top: 10%;
+            left: 10%;
+            animation-delay: 0s;
+        }
+
+        .circle:nth-child(2) {
+            width: 300px;
+            height: 300px;
+            top: 60%;
+            right: 15%;
+            animation-delay: 10s;
+        }
+
+        .circle:nth-child(3) {
+            width: 350px;
+            height: 350px;
+            bottom: 10%;
+            left: 50%;
+            animation-delay: 5s;
+        }
+
+        @keyframes float {
+            0%, 100% {
+                transform: translate(0, 0) scale(1);
+                opacity: 0.3;
+            }
+            33% {
+                transform: translate(50px, -50px) scale(1.1);
+                opacity: 0.5;
+            }
+            66% {
+                transform: translate(-30px, 30px) scale(0.9);
+                opacity: 0.4;
+            }
+        }
+
+        /* Container */
+        .container {
+            max-width: 900px;
+            width: 100%;
+            padding: 2rem;
+            position: relative;
+            z-index: 1;
+            text-align: center;
+        }
+
+        /* Logo */
+        .logo-container {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 1.5rem;
+            margin-bottom: 3rem;
+            animation: fadeInDown 1s ease;
+        }
+
+        @keyframes fadeInDown {
+            from {
+                opacity: 0;
+                transform: translateY(-30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .logo {
+            width: 100px;
+            height: 100px;
+            position: relative;
+        }
+
+        .logo svg {
+            width: 100%;
+            height: 100%;
+            filter: drop-shadow(0 0 30px rgba(212, 175, 55, 0.5));
+        }
+
+        .logo-text {
+            font-size: 4rem;
+            font-weight: 900;
+            background: linear-gradient(135deg, #d4af37 0%, #f4e5b0 50%, #d4af37 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            letter-spacing: 0.05em;
+            animation: shimmer 3s infinite;
+        }
+
+        @keyframes shimmer {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0.8; }
+        }
+
+        .tagline {
+            font-size: 0.9rem;
+            color: #888;
+            text-transform: uppercase;
+            letter-spacing: 0.3em;
+            font-weight: 600;
+            margin-top: -1rem;
+            margin-bottom: 3rem;
+            animation: fadeIn 1.5s ease;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+
+        /* Main Content */
+        .hero {
+            animation: fadeInUp 1s ease 0.3s backwards;
+        }
+
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        h1 {
+            font-size: 3.5rem;
+            font-weight: 900;
+            line-height: 1.2;
+            margin-bottom: 1.5rem;
+        }
+
+        .gradient-text {
+            background: linear-gradient(135deg, #ef4444, #dc2626);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            animation: pulse 2s infinite;
+        }
+
+        @keyframes pulse {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0.8; }
+        }
+
+        .subtitle {
+            font-size: 1.5rem;
+            color: #aaa;
+            margin-bottom: 1rem;
+            line-height: 1.6;
+        }
+
+        .highlight {
+            color: #d4af37;
+            font-weight: 700;
+        }
+
+        /* Stats Preview */
+        .stats-preview {
+            display: flex;
+            justify-content: center;
+            gap: 3rem;
+            margin: 3rem 0;
+            flex-wrap: wrap;
+            animation: fadeInUp 1s ease 0.6s backwards;
+        }
+
+        .stat {
+            text-align: center;
+        }
+
+        .stat-number {
+            font-size: 3rem;
+            font-weight: 900;
+            background: linear-gradient(135deg, #ef4444, #dc2626);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            line-height: 1;
+            margin-bottom: 0.5rem;
+        }
+
+        .stat-label {
+            font-size: 0.9rem;
+            color: #888;
+            text-transform: uppercase;
+            letter-spacing: 0.1em;
+        }
+
+        /* CTA Button */
+        .cta-button {
+            display: inline-block;
+            padding: 1.75rem 3.5rem;
+            background: linear-gradient(135deg, #d4af37, #c19b2a);
+            color: #000;
+            font-size: 1.5rem;
+            font-weight: 900;
+            border: none;
+            border-radius: 20px;
+            cursor: pointer;
+            text-decoration: none;
+            transition: all 0.3s;
+            margin: 2rem 0;
+            box-shadow: 0 20px 60px rgba(212, 175, 55, 0.3);
+            animation: fadeInUp 1s ease 0.9s backwards, float-button 3s infinite ease-in-out;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .cta-button::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.3), transparent);
+            transition: left 0.5s;
+        }
+
+        .cta-button:hover::before {
+            left: 100%;
+        }
+
+        .cta-button:hover {
+            transform: translateY(-5px) scale(1.05);
+            box-shadow: 0 30px 80px rgba(212, 175, 55, 0.5);
+        }
+
+        @keyframes float-button {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-10px); }
+        }
+
+        .cta-subtext {
+            font-size: 1rem;
+            color: #666;
+            margin-top: 1rem;
+            animation: fadeIn 2s ease 1.2s backwards;
+        }
+
+        .cta-subtext strong {
+            color: #d4af37;
+        }
+
+        /* Trust Signals */
+        .trust-signals {
+            display: flex;
+            justify-content: center;
+            gap: 2rem;
+            margin-top: 3rem;
+            flex-wrap: wrap;
+            animation: fadeIn 1.5s ease 1.5s backwards;
+        }
+
+        .trust-item {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            color: #888;
+            font-size: 0.95rem;
+        }
+
+        .trust-icon {
+            color: #22c55e;
+            font-size: 1.2rem;
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .logo-text {
+                font-size: 3rem;
+            }
+
+            h1 {
+                font-size: 2.5rem;
+            }
+
+            .subtitle {
+                font-size: 1.2rem;
+            }
+
+            .stats-preview {
+                gap: 2rem;
+            }
+
+            .stat-number {
+                font-size: 2.5rem;
+            }
+
+            .cta-button {
+                padding: 1.5rem 2.5rem;
+                font-size: 1.2rem;
+            }
+
+            .container {
+                padding: 1.5rem;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .logo-container {
+                flex-direction: column;
+                gap: 1rem;
+            }
+
+            .logo {
+                width: 80px;
+                height: 80px;
+            }
+
+            .logo-text {
+                font-size: 2.5rem;
+            }
+
+            h1 {
+                font-size: 2rem;
+            }
+
+            .stats-preview {
+                flex-direction: column;
+                gap: 1.5rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Animated Background -->
+    <div class="bg-animation">
+        <div class="circle"></div>
+        <div class="circle"></div>
+        <div class="circle"></div>
+    </div>
+
+    <!-- Main Content -->
+    <div class="container">
+        <!-- Logo -->
+        <div class="logo-container">
+            <div class="logo">
+                <svg viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
+                    <defs>
+                        <linearGradient id="logoGradient" x1="0%" y1="0%" x2="100%" y2="100%">
+                            <stop offset="0%" style="stop-color:#d4af37;stop-opacity:1" />
+                            <stop offset="50%" style="stop-color:#f4e5b0;stop-opacity:1" />
+                            <stop offset="100%" style="stop-color:#d4af37;stop-opacity:1" />
+                        </linearGradient>
+                    </defs>
+                    <circle cx="50" cy="50" r="48" fill="none" stroke="url(#logoGradient)" stroke-width="2" opacity="0.3"/>
+                    <path d="M 50 50 Q 50 35, 35 35 T 20 35 Q 20 50, 35 50 T 65 50 Q 65 20, 35 20 T 10 20 Q 10 80, 60 80 T 90 80 Q 90 10, 35 10" 
+                          stroke="url(#logoGradient)" 
+                          stroke-width="3" 
+                          fill="none"
+                          stroke-linecap="round">
+                        <animateTransform
+                            attributeName="transform"
+                            attributeType="XML"
+                            type="rotate"
+                            from="0 50 50"
+                            to="360 50 50"
+                            dur="120s"
+                            repeatCount="indefinite"/>
+                    </path>
+                </svg>
+            </div>
+            <div class="logo-text">EAR LAB</div>
+        </div>
+
+        <div class="tagline">Digital Solutions</div>
+
+        <!-- Hero Content -->
+        <div class="hero">
+            <h1>
+                Quanto stai <span class="gradient-text">perdendo</span><br>
+                ogni mese?
+            </h1>
+
+            <p class="subtitle">
+                La tua attività ha <span class="highlight">costi nascosti</span> che non vedi.<br>
+                Scoprili in <span class="highlight">2 minuti</span>.
+            </p>
+
+            <!-- Stats Preview -->
+            <div class="stats-preview">
+                <div class="stat">
+                    <div class="stat-number">€1.500+</div>
+                    <div class="stat-label">Perdita Media/Mese</div>
+                </div>
+                <div class="stat">
+                    <div class="stat-number">2 Min</div>
+                    <div class="stat-label">Durata Test</div>
+                </div>
+                <div class="stat">
+                    <div class="stat-number">6</div>
+                    <div class="stat-label">Domande Semplici</div>
+                </div>
+            </div>
+
+            <!-- CTA -->
+            <a href="quiz.html" class="cta-button">
+                Scopri Quanto Stai Perdendo →
+            </a>
+
+            <div class="cta-subtext">
+                <strong>Gratuito</strong> • 2 minuti • Report personalizzato
+            </div>
+
+            <!-- Trust Signals -->
+            <div class="trust-signals">
+                <div class="trust-item">
+                    <span class="trust-icon">✓</span>
+                    <span>Nessuna registrazione</span>
+                </div>
+                <div class="trust-item">
+                    <span class="trust-icon">✓</span>
+                    <span>100% gratuito</span>
+                </div>
+                <div class="trust-item">
+                    <span class="trust-icon">✓</span>
+                    <span>Report immediato</span>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+</html>
