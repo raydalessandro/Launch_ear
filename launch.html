@@ -1,0 +1,955 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>EAR LAB - Offerta Lancio</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            background: #000;
+            color: #fff;
+            line-height: 1.6;
+        }
+
+        /* Navigation */
+        nav {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            background: rgba(10, 10, 10, 0.95);
+            backdrop-filter: blur(10px);
+            border-bottom: 1px solid rgba(212, 175, 55, 0.2);
+            z-index: 1000;
+            padding: 1rem 0;
+        }
+
+        .nav-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 2rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo-nav {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+        }
+
+        .logo-icon {
+            width: 40px;
+            height: 40px;
+        }
+
+        .logo-text {
+            font-size: 1.5rem;
+            font-weight: 900;
+            background: linear-gradient(135deg, #d4af37, #f4e5b0);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 2rem;
+            list-style: none;
+        }
+
+        .nav-links a {
+            color: #ccc;
+            text-decoration: none;
+            font-weight: 500;
+            transition: color 0.3s;
+        }
+
+        .nav-links a:hover {
+            color: #d4af37;
+        }
+
+        .btn {
+            padding: 0.75rem 1.5rem;
+            border: none;
+            border-radius: 10px;
+            font-weight: 700;
+            cursor: pointer;
+            transition: all 0.3s;
+            text-decoration: none;
+            display: inline-block;
+        }
+
+        .btn-primary {
+            background: linear-gradient(135deg, #d4af37, #c19b2a);
+            color: #000;
+        }
+
+        .btn-primary:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 30px rgba(212, 175, 55, 0.3);
+        }
+
+        /* Countdown Banner */
+        .countdown-banner {
+            position: fixed;
+            top: 60px;
+            left: 0;
+            right: 0;
+            background: linear-gradient(90deg, #ef4444, #d4af37, #ef4444);
+            padding: 0.75rem;
+            text-align: center;
+            font-weight: 700;
+            z-index: 999;
+            animation: pulse 2s infinite;
+        }
+
+        @keyframes pulse {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0.9; }
+        }
+
+        .countdown-banner span {
+            margin: 0 1rem;
+        }
+
+        /* Hero */
+        .hero {
+            padding: 10rem 2rem 6rem;
+            background: linear-gradient(135deg, #000 0%, #1a1a1a 50%, #2a2a2a 100%);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .hero::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: radial-gradient(circle at 50% 50%, rgba(212, 175, 55, 0.1) 0%, transparent 50%);
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            position: relative;
+            z-index: 1;
+        }
+
+        .hero-content {
+            text-align: center;
+            max-width: 900px;
+            margin: 0 auto;
+        }
+
+        .badge {
+            display: inline-block;
+            padding: 0.5rem 1rem;
+            background: rgba(212, 175, 55, 0.1);
+            border: 1px solid rgba(212, 175, 55, 0.3);
+            border-radius: 50px;
+            color: #d4af37;
+            font-size: 0.9rem;
+            font-weight: 600;
+            margin-bottom: 1.5rem;
+        }
+
+        h1 {
+            font-size: 3.5rem;
+            font-weight: 900;
+            line-height: 1.2;
+            margin-bottom: 1.5rem;
+        }
+
+        .gradient-text {
+            background: linear-gradient(135deg, #d4af37, #f4e5b0);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .hero-text {
+            font-size: 1.25rem;
+            color: #aaa;
+            margin-bottom: 2rem;
+        }
+
+        .hero-buttons {
+            display: flex;
+            gap: 1rem;
+            justify-content: center;
+            flex-wrap: wrap;
+            margin-bottom: 2rem;
+        }
+
+        .trust-signals {
+            display: flex;
+            justify-content: center;
+            gap: 2rem;
+            flex-wrap: wrap;
+            font-size: 0.9rem;
+            color: #888;
+        }
+
+        .trust-signals div {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        /* Stats */
+        .stats {
+            padding: 4rem 2rem;
+            background: linear-gradient(to bottom, #000, #0a0a0a);
+            border-top: 1px solid rgba(212, 175, 55, 0.2);
+        }
+
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 2rem;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .stat {
+            text-align: center;
+        }
+
+        .stat-number {
+            font-size: 3rem;
+            font-weight: 900;
+            background: linear-gradient(135deg, #d4af37, #f4e5b0);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            margin-bottom: 0.5rem;
+        }
+
+        .stat-label {
+            color: #888;
+        }
+
+        /* Services */
+        .services {
+            padding: 6rem 2rem;
+            background: #0a0a0a;
+        }
+
+        .section-header {
+            text-align: center;
+            margin-bottom: 4rem;
+        }
+
+        .section-header h2 {
+            font-size: 3rem;
+            font-weight: 900;
+            margin-bottom: 1rem;
+        }
+
+        .services-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .service-card {
+            background: linear-gradient(135deg, #1a1a1a, #0a0a0a);
+            border: 2px solid rgba(212, 175, 55, 0.2);
+            border-radius: 20px;
+            padding: 2rem;
+            transition: all 0.3s;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .service-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(212, 175, 55, 0.1), transparent);
+            transition: left 0.6s;
+        }
+
+        .service-card:hover::before {
+            left: 100%;
+        }
+
+        .service-card:hover {
+            transform: translateY(-10px);
+            border-color: #d4af37;
+            box-shadow: 0 20px 40px rgba(212, 175, 55, 0.2);
+        }
+
+        .service-card.popular {
+            border-color: #d4af37;
+            box-shadow: 0 10px 30px rgba(212, 175, 55, 0.2);
+        }
+
+        .popular-badge {
+            position: absolute;
+            top: -12px;
+            left: 50%;
+            transform: translateX(-50%);
+            background: linear-gradient(135deg, #d4af37, #c19b2a);
+            color: #000;
+            padding: 0.3rem 1.5rem;
+            border-radius: 50px;
+            font-size: 0.75rem;
+            font-weight: 900;
+        }
+
+        .discount-badge {
+            position: absolute;
+            top: 1rem;
+            right: 1rem;
+            background: #ef4444;
+            color: #fff;
+            padding: 0.3rem 0.8rem;
+            border-radius: 50px;
+            font-size: 0.75rem;
+            font-weight: 900;
+            animation: bounce 2s infinite;
+        }
+
+        @keyframes bounce {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.1); }
+        }
+
+        .service-icon {
+            font-size: 3rem;
+            margin-bottom: 1rem;
+        }
+
+        .service-card h3 {
+            font-size: 1.5rem;
+            margin-bottom: 0.5rem;
+        }
+
+        .service-tagline {
+            color: #d4af37;
+            font-size: 0.9rem;
+            font-weight: 600;
+            margin-bottom: 1rem;
+        }
+
+        .service-description {
+            color: #888;
+            margin-bottom: 1.5rem;
+            font-size: 0.95rem;
+        }
+
+        .service-features {
+            list-style: none;
+            margin-bottom: 1.5rem;
+        }
+
+        .service-features li {
+            padding: 0.5rem 0;
+            color: #ccc;
+            font-size: 0.9rem;
+            display: flex;
+            align-items: start;
+            gap: 0.5rem;
+        }
+
+        .service-features li::before {
+            content: '✓';
+            color: #d4af37;
+            font-weight: bold;
+            flex-shrink: 0;
+        }
+
+        .price-section {
+            border-top: 2px solid rgba(212, 175, 55, 0.2);
+            padding-top: 1.5rem;
+            margin-top: 1.5rem;
+        }
+
+        .original-price {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            margin-bottom: 0.5rem;
+        }
+
+        .original-price .strikethrough {
+            color: #666;
+            text-decoration: line-through;
+            font-size: 1.2rem;
+        }
+
+        .savings-badge {
+            background: #ef4444;
+            color: #fff;
+            padding: 0.2rem 0.6rem;
+            border-radius: 5px;
+            font-size: 0.75rem;
+            font-weight: 700;
+        }
+
+        .price {
+            display: flex;
+            align-items: baseline;
+            gap: 0.5rem;
+            margin-bottom: 1.5rem;
+        }
+
+        .price-amount {
+            font-size: 3rem;
+            font-weight: 900;
+            background: linear-gradient(135deg, #d4af37, #f4e5b0);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .price-period {
+            color: #666;
+        }
+
+        .price-lock {
+            color: #d4af37;
+            font-size: 0.85rem;
+            font-weight: 600;
+            margin-bottom: 1rem;
+        }
+
+        /* CTA */
+        .cta {
+            padding: 6rem 2rem;
+            background: linear-gradient(135deg, #c19b2a, #d4af37, #c19b2a);
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .cta::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: radial-gradient(circle, rgba(255, 255, 255, 0.1), transparent);
+            opacity: 0.5;
+        }
+
+        .cta h2 {
+            font-size: 3rem;
+            font-weight: 900;
+            color: #000;
+            margin-bottom: 1rem;
+            position: relative;
+            z-index: 1;
+        }
+
+        .cta p {
+            font-size: 1.5rem;
+            color: rgba(0, 0, 0, 0.8);
+            margin-bottom: 2rem;
+            position: relative;
+            z-index: 1;
+        }
+
+        .cta .btn-primary {
+            background: #000;
+            color: #d4af37;
+            font-size: 1.25rem;
+            padding: 1.25rem 2.5rem;
+            position: relative;
+            z-index: 1;
+        }
+
+        .cta .btn-primary:hover {
+            background: #1a1a1a;
+        }
+
+        /* Footer */
+        footer {
+            background: #000;
+            padding: 3rem 2rem;
+            border-top: 1px solid rgba(212, 175, 55, 0.2);
+        }
+
+        .footer-content {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 2rem;
+        }
+
+        .footer-section h4 {
+            color: #d4af37;
+            margin-bottom: 1rem;
+        }
+
+        .footer-section ul {
+            list-style: none;
+        }
+
+        .footer-section a {
+            color: #888;
+            text-decoration: none;
+            display: block;
+            padding: 0.3rem 0;
+            transition: color 0.3s;
+        }
+
+        .footer-section a:hover {
+            color: #d4af37;
+        }
+
+        .footer-bottom {
+            text-align: center;
+            margin-top: 2rem;
+            padding-top: 2rem;
+            border-top: 1px solid rgba(212, 175, 55, 0.2);
+            color: #666;
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .nav-links {
+                display: none;
+            }
+
+            h1 {
+                font-size: 2.5rem;
+            }
+
+            .hero {
+                padding: 8rem 1.5rem 4rem;
+            }
+
+            .hero-buttons {
+                flex-direction: column;
+            }
+
+            .services-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .countdown-banner {
+                font-size: 0.85rem;
+            }
+
+            .countdown-banner span {
+                margin: 0 0.5rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Navigation -->
+    <nav>
+        <div class="nav-container">
+            <div class="logo-nav">
+                <svg class="logo-icon" viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
+                    <defs>
+                        <linearGradient id="logoGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+                            <stop offset="0%" style="stop-color:#d4af37"/>
+                            <stop offset="50%" style="stop-color:#f4e5b0"/>
+                            <stop offset="100%" style="stop-color:#d4af37"/>
+                        </linearGradient>
+                    </defs>
+                    <circle cx="50" cy="50" r="48" fill="none" stroke="url(#logoGrad)" stroke-width="2" opacity="0.3"/>
+                    <path d="M 50 50 Q 50 35, 35 35 T 20 35 Q 20 50, 35 50 T 65 50 Q 65 20, 35 20 T 10 20 Q 10 80, 60 80 T 90 80 Q 90 10, 35 10" 
+                          stroke="url(#logoGrad)" 
+                          stroke-width="3" 
+                          fill="none"
+                          stroke-linecap="round"/>
+                </svg>
+                <div class="logo-text">EAR LAB</div>
+            </div>
+            <ul class="nav-links">
+                <li><a href="#servizi">Servizi</a></li>
+                <li><a href="#contatti">Contatti</a></li>
+            </ul>
+            <button class="btn btn-primary" onclick="alert('🎉 Registrazione in arrivo!')">Inizia Gratis</button>
+        </div>
+    </nav>
+
+    <!-- Countdown Banner -->
+    <div class="countdown-banner">
+        ⚡ OFFERTA LANCIO - PREZZI BLOCCATI PER SEMPRE
+        <span>⏰ Scade tra: 14 giorni</span>
+    </div>
+
+    <!-- Hero -->
+    <section class="hero">
+        <div class="container">
+            <div class="hero-content">
+                <span class="badge">⭐ Offerta Lancio: Fino al 56% di sconto</span>
+                <h1>
+                    Il tuo negozio,<br>
+                    <span class="gradient-text">potenziato.</span>
+                </h1>
+                <p class="hero-text">
+                    Gestisci il team, comunica meglio, vendi di più.<br>
+                    <strong>Scegli solo i servizi che ti servono. Pay-as-you-go.</strong>
+                </p>
+                <div class="hero-buttons">
+                    <button class="btn btn-primary" onclick="location.href='#servizi'">
+                        Inizia 7 Giorni Gratis →
+                    </button>
+                </div>
+                <div class="trust-signals">
+                    <div>✓ 7 giorni gratis</div>
+                    <div>✓ Nessuna carta richiesta</div>
+                    <div>✓ Cancella quando vuoi</div>
+                    <div>🔒 Prezzo bloccato per sempre</div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Stats -->
+    <section class="stats">
+        <div class="stats-grid">
+            <div class="stat">
+                <div class="stat-number">14</div>
+                <div class="stat-label">Giorni Offerta Lancio</div>
+            </div>
+            <div class="stat">
+                <div class="stat-number">56%</div>
+                <div class="stat-label">Sconto Massimo</div>
+            </div>
+            <div class="stat">
+                <div class="stat-number">100+</div>
+                <div class="stat-label">Ore Sviluppo</div>
+            </div>
+            <div class="stat">
+                <div class="stat-number">∞</div>
+                <div class="stat-label">Prezzo Bloccato</div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Why Now -->
+    <section style="padding: 4rem 2rem; background: linear-gradient(135deg, rgba(212, 175, 55, 0.05), transparent);">
+        <div class="container">
+            <div class="section-header">
+                <h2>Perché Iscriverti <span class="gradient-text">Ora?</span></h2>
+            </div>
+            <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 2rem; max-width: 1000px; margin: 0 auto;">
+                <div style="text-align: center; padding: 2rem; background: rgba(26, 26, 26, 0.5); border: 1px solid rgba(212, 175, 55, 0.2); border-radius: 15px;">
+                    <div style="font-size: 3rem; margin-bottom: 1rem;">🔒</div>
+                    <h3 style="font-size: 1.3rem; margin-bottom: 0.5rem; color: #d4af37;">Prezzo Bloccato</h3>
+                    <p style="color: #aaa; font-size: 0.95rem;">I primi 50 clienti mantengono questi prezzi per sempre. Anche quando aumenteremo.</p>
+                </div>
+                <div style="text-align: center; padding: 2rem; background: rgba(26, 26, 26, 0.5); border: 1px solid rgba(212, 175, 55, 0.2); border-radius: 15px;">
+                    <div style="font-size: 3rem; margin-bottom: 1rem;">🎯</div>
+                    <h3 style="font-size: 1.3rem; margin-bottom: 0.5rem; color: #d4af37;">Supporto Prioritario</h3>
+                    <p style="color: #aaa; font-size: 0.95rem;">Come early adopter, avrai accesso diretto al team e supporto personalizzato.</p>
+                </div>
+                <div style="text-align: center; padding: 2rem; background: rgba(26, 26, 26, 0.5); border: 1px solid rgba(212, 175, 55, 0.2); border-radius: 15px;">
+                    <div style="font-size: 3rem; margin-bottom: 1rem;">💡</div>
+                    <h3 style="font-size: 1.3rem; margin-bottom: 0.5rem; color: #d4af37;">Influenza le Features</h3>
+                    <p style="color: #aaa; font-size: 0.95rem;">Il tuo feedback guiderà lo sviluppo. Costruiremo le features che TU chiedi.</p>
+                </div>
+                <div style="text-align: center; padding: 2rem; background: rgba(26, 26, 26, 0.5); border: 1px solid rgba(212, 175, 55, 0.2); border-radius: 15px;">
+                    <div style="font-size: 3rem; margin-bottom: 1rem;">⚡</div>
+                    <h3 style="font-size: 1.3rem; margin-bottom: 0.5rem; color: #d4af37;">Zero Rischio</h3>
+                    <p style="color: #aaa; font-size: 0.95rem;">7 giorni gratis, nessuna carta richiesta. Non ti piace? Cancelli in un click.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Services -->
+    <section id="servizi" class="services">
+        <div class="container">
+            <div class="section-header">
+                <span class="badge">💎 Offerta Lancio - Sconti fino al 56%</span>
+                <h2>Soluzioni <span class="gradient-text">Modulari</span></h2>
+                <p style="color: #aaa; font-size: 1.1rem;">
+                    Scegli i servizi che ti servono davvero. Paga solo quello che usi.<br>
+                    <strong style="color: #d4af37;">Prezzi bloccati per sempre per i primi clienti.</strong>
+                </p>
+            </div>
+
+            <div class="services-grid">
+                <!-- Maestro Negozio -->
+                <div class="service-card">
+                    <div class="discount-badge">-47%</div>
+                    <div class="service-icon">📊</div>
+                    <h3>Maestro Negozio</h3>
+                    <div class="service-tagline">Gamification & Task Management</div>
+                    <p class="service-description">Sistema completo per motivare il team e gestire task quotidiane con intelligenza artificiale.</p>
+                    <ul class="service-features">
+                        <li>Sistema punti, livelli e badges</li>
+                        <li>Gestione task giornaliere</li>
+                        <li>Feedback anonimo team</li>
+                        <li>Analytics AI avanzate</li>
+                        <li>Report PDF automatici</li>
+                    </ul>
+                    <div class="price-section">
+                        <div class="original-price">
+                            <span class="strikethrough">€149</span>
+                            <span class="savings-badge">RISPARMI €70</span>
+                        </div>
+                        <div class="price">
+                            <span class="price-amount">€79</span>
+                            <span class="price-period">/mese</span>
+                        </div>
+                        <div class="price-lock">✨ Prezzo bloccato per sempre</div>
+                        <button class="btn btn-primary" style="width: 100%;" onclick="alert('🎉 Aggiunto al carrello!')">Aggiungi al Carrello</button>
+                    </div>
+                </div>
+
+                <!-- Chat Team -->
+                <div class="service-card popular">
+                    <div class="popular-badge">🔥 PIÙ SCELTO</div>
+                    <div class="discount-badge">-50%</div>
+                    <div class="service-icon">💬</div>
+                    <h3>Chat Team</h3>
+                    <div class="service-tagline">Comunicazione Sicura & Professionale</div>
+                    <p class="service-description">App di messaggistica dedicata con crittografia end-to-end e database privato.</p>
+                    <ul class="service-features">
+                        <li><strong>🔐 Crittografia end-to-end</strong></li>
+                        <li><strong>💾 Database privato dedicato</strong></li>
+                        <li>Chat 1-on-1 e broadcast</li>
+                        <li>File sharing illimitato</li>
+                        <li>Check-in/out digitale</li>
+                        <li>GDPR compliant</li>
+                    </ul>
+                    <div class="price-section">
+                        <div class="original-price">
+                            <span class="strikethrough">€199</span>
+                            <span class="savings-badge">RISPARMI €100</span>
+                        </div>
+                        <div class="price">
+                            <span class="price-amount">€99</span>
+                            <span class="price-period">/mese</span>
+                        </div>
+                        <div class="price-lock">✨ Prezzo bloccato per sempre</div>
+                        <button class="btn btn-primary" style="width: 100%;" onclick="alert('🎉 Aggiunto al carrello!')">Aggiungi al Carrello</button>
+                    </div>
+                </div>
+
+                <!-- WhatsApp Marketing -->
+                <div class="service-card">
+                    <div class="discount-badge">-51%</div>
+                    <div class="service-icon">📱</div>
+                    <h3>WhatsApp Marketing</h3>
+                    <div class="service-tagline">Bulk Sender Professionale</div>
+                    <p class="service-description">Sistema di marketing automation per WhatsApp. Segmenta, personalizza, automatizza.</p>
+                    <ul class="service-features">
+                        <li><strong>100 messaggi inclusi/mese</strong></li>
+                        <li>€0.08/msg aggiuntivo</li>
+                        <li>Template personalizzabili</li>
+                        <li>Segmentazione avanzata</li>
+                        <li>Analytics dettagliate</li>
+                    </ul>
+                    <div class="price-section">
+                        <div class="original-price">
+                            <span class="strikethrough">€59</span>
+                            <span class="savings-badge">RISPARMI €30</span>
+                        </div>
+                        <div class="price">
+                            <span class="price-amount">€29</span>
+                            <span class="price-period">/mese</span>
+                        </div>
+                        <div class="price-lock">✨ Prezzo bloccato per sempre</div>
+                        <button class="btn btn-primary" style="width: 100%;" onclick="alert('🎉 Aggiunto al carrello!')">Aggiungi al Carrello</button>
+                    </div>
+                </div>
+
+                <!-- Sito Web Standard -->
+                <div class="service-card">
+                    <div class="discount-badge">-50%</div>
+                    <div class="service-icon">🌐</div>
+                    <h3>Sito Web Standard</h3>
+                    <div class="service-tagline">Design Professionale + Hosting</div>
+                    <p class="service-description">Sito web completo responsive con hosting, dominio e modifiche ricorrenti incluse.</p>
+                    <ul class="service-features">
+                        <li>Design responsive custom</li>
+                        <li>Hosting + Dominio + SSL</li>
+                        <li>Modifiche ricorrenti incluse</li>
+                        <li>Form contatti + Maps</li>
+                        <li>Blog integrato</li>
+                    </ul>
+                    <div class="price-section">
+                        <div class="original-price">
+                            <span class="strikethrough">€399</span>
+                            <span class="savings-badge">RISPARMI €199</span>
+                        </div>
+                        <div class="price">
+                            <span class="price-amount">€200</span>
+                            <span class="price-period">/mese</span>
+                        </div>
+                        <p style="font-size: 0.85rem; color: #d4af37; margin-bottom: 1rem; font-weight: 600;">
+                            📝 +€100/mese per 2-4 articoli SEO
+                        </p>
+                        <button class="btn btn-primary" style="width: 100%;" onclick="alert('🎉 Aggiunto al carrello!')">Aggiungi (€200)</button>
+                    </div>
+                </div>
+
+                <!-- Premi & Promo -->
+                <div class="service-card">
+                    <div class="discount-badge">-47%</div>
+                    <div class="service-icon">🎁</div>
+                    <h3>Premi & Promo</h3>
+                    <div class="service-tagline">Fidelizzazione Automatica</div>
+                    <p class="service-description">Sistema completo per coupon, carte fedeltà e promozioni. Tutto digitale, tutto tracciato.</p>
+                    <ul class="service-features">
+                        <li>Coupon digitali illimitati</li>
+                        <li>Carte fedeltà branded</li>
+                        <li>QR code generator</li>
+                        <li>Analytics redemption</li>
+                        <li>Campagne automatiche</li>
+                    </ul>
+                    <div class="price-section">
+                        <div class="original-price">
+                            <span class="strikethrough">€129</span>
+                            <span class="savings-badge">RISPARMI €60</span>
+                        </div>
+                        <div class="price">
+                            <span class="price-amount">€69</span>
+                            <span class="price-period">/mese</span>
+                        </div>
+                        <div class="price-lock">✨ Prezzo bloccato per sempre</div>
+                        <button class="btn btn-primary" style="width: 100%;" onclick="alert('🎉 Aggiunto al carrello!')">Aggiungi al Carrello</button>
+                    </div>
+                </div>
+
+                <!-- Drive Aziendale -->
+                <div class="service-card">
+                    <div class="discount-badge">-56%</div>
+                    <div class="service-icon">☁️</div>
+                    <h3>Drive Aziendale</h3>
+                    <div class="service-tagline">Storage Cloud Privato</div>
+                    <p class="service-description">Storage cloud sicuro con condivisione file, permessi granulari e backup automatico. La tua Google Drive privata.</p>
+                    <ul class="service-features">
+                        <li><strong>100GB storage incluso</strong></li>
+                        <li>Condivisione con permessi</li>
+                        <li>Versioning automatico</li>
+                        <li>Backup crittografato</li>
+                        <li>Accesso multi-device</li>
+                        <li>€0.02/GB extra al mese</li>
+                    </ul>
+                    <div class="price-section">
+                        <div class="original-price">
+                            <span class="strikethrough">€89</span>
+                            <span class="savings-badge">RISPARMI €50</span>
+                        </div>
+                        <div class="price">
+                            <span class="price-amount">€39</span>
+                            <span class="price-period">/mese</span>
+                        </div>
+                        <div class="price-lock">✨ Prezzo bloccato per sempre</div>
+                        <button class="btn btn-primary" style="width: 100%;" onclick="alert('🎉 Aggiunto al carrello!')">Aggiungi al Carrello</button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Trust Banner -->
+            <div style="text-align: center; margin-top: 4rem;">
+                <div style="display: inline-flex; gap: 2rem; padding: 1.5rem 3rem; background: rgba(212, 175, 55, 0.1); border: 1px solid rgba(212, 175, 55, 0.3); border-radius: 20px; flex-wrap: wrap; justify-content: center;">
+                    <div style="display: flex; align-items: center; gap: 0.5rem;">
+                        <span style="font-size: 1.2rem;">🔒</span>
+                        <span style="font-weight: 600;">Prezzi bloccati per sempre</span>
+                    </div>
+                    <div style="display: flex; align-items: center; gap: 0.5rem;">
+                        <span style="font-size: 1.2rem;">⏰</span>
+                        <span style="font-weight: 600;">Offerta valida 14 giorni</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- CTA -->
+    <section class="cta">
+        <div class="container">
+            <h2>Diventa Early Adopter</h2>
+            <p>
+                Entra tra i primi 50 clienti e blocca questi prezzi per sempre.<br>
+                <strong>I prezzi saliranno dopo il lancio - garantito.</strong>
+            </p>
+            <button class="btn btn-primary" onclick="alert('🚀 Registrazione in arrivo!')">
+                Inizia Gratis per 7 Giorni
+            </button>
+            <div style="margin-top: 2rem; display: flex; justify-content: center; gap: 2rem; flex-wrap: wrap; color: rgba(0,0,0,0.7); font-size: 0.9rem;">
+                <div>✓ Prezzo bloccato per sempre</div>
+                <div>✓ Supporto prioritario</div>
+                <div>✓ Influenza sulle features future</div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer id="contatti">
+        <div class="footer-content">
+            <div class="footer-section">
+                <div style="display: flex; align-items: center; gap: 0.5rem; margin-bottom: 1rem;">
+                    <svg width="30" height="30" viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
+                        <defs>
+                            <linearGradient id="footerGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+                                <stop offset="0%" style="stop-color:#d4af37"/>
+                                <stop offset="100%" style="stop-color:#f4e5b0"/>
+                            </linearGradient>
+                        </defs>
+                        <path d="M 50 50 Q 50 35, 35 35 T 20 35 Q 20 50, 35 50 T 65 50 Q 65 20, 35 20 T 10 20 Q 10 80, 60 80 T 90 80 Q 90 10, 35 10" 
+                              stroke="url(#footerGrad)" 
+                              stroke-width="4" 
+                              fill="none"
+                              stroke-linecap="round"/>
+                    </svg>
+                    <span style="font-size: 1.5rem; font-weight: 900; color: #d4af37;">EAR LAB</span>
+                </div>
+                <p style="color: #888; font-size: 0.9rem;">Soluzioni digitali premium per retail che vogliono crescere.</p>
+            </div>
+            <div class="footer-section">
+                <h4>Servizi</h4>
+                <ul>
+                    <li><a href="#servizi">Maestro Negozio</a></li>
+                    <li><a href="#servizi">Chat Team</a></li>
+                    <li><a href="#servizi">WhatsApp Marketing</a></li>
+                    <li><a href="#servizi">Sito Web</a></li>
+                    <li><a href="#servizi">Premi & Promo</a></li>
+                    <li><a href="#servizi">Drive Aziendale</a></li>
+                </ul>
+            </div>
+            <div class="footer-section">
+                <h4>Azienda</h4>
+                <ul>
+                    <li><a href="#">Chi Siamo</a></li>
+                    <li><a href="#">Casi Studio</a></li>
+                    <li><a href="#">Blog</a></li>
+                    <li><a href="#">Contatti</a></li>
+                </ul>
+            </div>
+            <div class="footer-section">
+                <h4>Legale</h4>
+                <ul>
+                    <li><a href="#">Privacy Policy</a></li>
+                    <li><a href="#">Terms of Service</a></li>
+                    <li><a href="#">Cookie Policy</a></li>
+                </ul>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            <p>© 2024 <strong style="color: #d4af37;">EAR LAB</strong>. Tutti i diritti riservati.</p>
+        </div>
+    </footer>
+</body>
+</html>
