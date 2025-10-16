@@ -1,0 +1,889 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>EAR LAB - Calcola il Tuo Prezzo</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            background: #000;
+            color: #fff;
+            padding: 2rem 1rem;
+            min-height: 100vh;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        /* Header */
+        .header {
+            text-align: center;
+            margin-bottom: 3rem;
+        }
+
+        .logo {
+            display: inline-flex;
+            align-items: center;
+            gap: 1rem;
+            margin-bottom: 1rem;
+        }
+
+        .logo-icon {
+            width: 50px;
+            height: 50px;
+        }
+
+        .logo-text {
+            font-size: 2rem;
+            font-weight: 900;
+            background: linear-gradient(135deg, #d4af37, #f4e5b0);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        h1 {
+            font-size: 2.5rem;
+            font-weight: 900;
+            margin-bottom: 0.5rem;
+        }
+
+        .gradient-text {
+            background: linear-gradient(135deg, #d4af37, #f4e5b0);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .subtitle {
+            color: #888;
+            font-size: 1.1rem;
+        }
+
+        /* Steps */
+        .steps {
+            display: flex;
+            justify-content: center;
+            gap: 1rem;
+            margin-bottom: 3rem;
+            flex-wrap: wrap;
+        }
+
+        .step {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            padding: 0.5rem 1rem;
+            background: rgba(26, 26, 26, 0.5);
+            border: 1px solid rgba(212, 175, 55, 0.2);
+            border-radius: 50px;
+            font-size: 0.9rem;
+        }
+
+        .step.active {
+            background: #d4af37;
+            color: #000;
+            font-weight: 700;
+        }
+
+        .step-number {
+            width: 24px;
+            height: 24px;
+            background: rgba(0, 0, 0, 0.2);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 0.75rem;
+            font-weight: 700;
+        }
+
+        /* Card */
+        .card {
+            background: linear-gradient(135deg, #1a1a1a, #0a0a0a);
+            border: 2px solid rgba(212, 175, 55, 0.3);
+            border-radius: 20px;
+            padding: 2rem;
+            margin-bottom: 2rem;
+        }
+
+        .card h2 {
+            font-size: 1.8rem;
+            margin-bottom: 1.5rem;
+            color: #d4af37;
+        }
+
+        /* Size Selection */
+        .size-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 1.5rem;
+        }
+
+        .size-card {
+            padding: 2rem;
+            background: rgba(26, 26, 26, 0.5);
+            border: 2px solid rgba(212, 175, 55, 0.2);
+            border-radius: 15px;
+            cursor: pointer;
+            transition: all 0.3s;
+            text-align: center;
+        }
+
+        .size-card:hover {
+            border-color: #d4af37;
+            transform: translateY(-5px);
+            box-shadow: 0 10px 30px rgba(212, 175, 55, 0.2);
+        }
+
+        .size-emoji {
+            font-size: 3rem;
+            margin-bottom: 1rem;
+        }
+
+        .size-name {
+            font-size: 1.3rem;
+            font-weight: 700;
+            margin-bottom: 0.5rem;
+        }
+
+        .size-desc {
+            font-size: 0.9rem;
+            color: #888;
+            margin-bottom: 1rem;
+        }
+
+        .size-specs {
+            display: flex;
+            justify-content: space-around;
+            padding-top: 1rem;
+            border-top: 1px solid rgba(212, 175, 55, 0.2);
+            font-size: 0.85rem;
+        }
+
+        .size-spec {
+            text-align: center;
+        }
+
+        .size-spec-label {
+            color: #666;
+            font-size: 0.75rem;
+        }
+
+        .size-spec-value {
+            color: #d4af37;
+            font-weight: 700;
+        }
+
+        /* Sliders */
+        .slider-group {
+            margin-bottom: 2rem;
+        }
+
+        .slider-label {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 0.5rem;
+            font-weight: 600;
+        }
+
+        .slider-value {
+            color: #d4af37;
+            font-size: 1.2rem;
+        }
+
+        input[type="range"] {
+            width: 100%;
+            height: 8px;
+            background: rgba(212, 175, 55, 0.2);
+            border-radius: 5px;
+            outline: none;
+            -webkit-appearance: none;
+        }
+
+        input[type="range"]::-webkit-slider-thumb {
+            -webkit-appearance: none;
+            width: 20px;
+            height: 20px;
+            background: #d4af37;
+            border-radius: 50%;
+            cursor: pointer;
+        }
+
+        input[type="range"]::-moz-range-thumb {
+            width: 20px;
+            height: 20px;
+            background: #d4af37;
+            border-radius: 50%;
+            cursor: pointer;
+            border: none;
+        }
+
+        .slider-range {
+            display: flex;
+            justify-content: space-between;
+            margin-top: 0.5rem;
+            font-size: 0.8rem;
+            color: #666;
+        }
+
+        /* Services */
+        .services-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 1.5rem;
+        }
+
+        .service-card {
+            padding: 1.5rem;
+            background: rgba(26, 26, 26, 0.5);
+            border: 2px solid rgba(212, 175, 55, 0.2);
+            border-radius: 15px;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+
+        .service-card.selected {
+            border-color: #d4af37;
+            background: rgba(212, 175, 55, 0.1);
+        }
+
+        .service-header {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            margin-bottom: 1rem;
+        }
+
+        .service-emoji {
+            font-size: 2.5rem;
+        }
+
+        .service-info h3 {
+            font-size: 1.2rem;
+            margin-bottom: 0.25rem;
+        }
+
+        .service-tagline {
+            font-size: 0.8rem;
+            color: #d4af37;
+        }
+
+        .service-features {
+            list-style: none;
+            margin-bottom: 1rem;
+            font-size: 0.85rem;
+        }
+
+        .service-features li {
+            padding: 0.3rem 0;
+            color: #aaa;
+        }
+
+        .service-features li::before {
+            content: '✓ ';
+            color: #d4af37;
+        }
+
+        .service-price {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding-top: 1rem;
+            border-top: 1px solid rgba(212, 175, 55, 0.2);
+        }
+
+        .price-amount {
+            font-size: 1.8rem;
+            font-weight: 900;
+            color: #d4af37;
+        }
+
+        .price-period {
+            font-size: 0.9rem;
+            color: #666;
+        }
+
+        .custom-price {
+            color: #d4af37;
+            font-weight: 700;
+        }
+
+        /* Summary */
+        .summary-card {
+            background: linear-gradient(135deg, rgba(212, 175, 55, 0.2), rgba(212, 175, 55, 0.05));
+            border: 2px solid #d4af37;
+            border-radius: 20px;
+            padding: 2rem;
+        }
+
+        .config-summary {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+            gap: 1.5rem;
+            margin-bottom: 2rem;
+        }
+
+        .config-item {
+            text-align: center;
+        }
+
+        .config-emoji {
+            font-size: 2rem;
+            margin-bottom: 0.5rem;
+        }
+
+        .config-label {
+            font-size: 0.8rem;
+            color: #888;
+        }
+
+        .config-value {
+            font-size: 1.2rem;
+            font-weight: 700;
+            color: #d4af37;
+        }
+
+        .services-list {
+            margin-bottom: 2rem;
+        }
+
+        .service-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 1rem;
+            background: rgba(0, 0, 0, 0.3);
+            border-radius: 10px;
+            margin-bottom: 0.5rem;
+        }
+
+        .service-name {
+            font-weight: 600;
+        }
+
+        .service-cost {
+            font-size: 1.3rem;
+            font-weight: 900;
+            color: #d4af37;
+        }
+
+        .total-section {
+            padding-top: 2rem;
+            border-top: 2px solid #d4af37;
+        }
+
+        .total-row {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 1rem;
+        }
+
+        .total-label {
+            font-size: 1.5rem;
+            font-weight: 700;
+        }
+
+        .total-amount {
+            font-size: 3rem;
+            font-weight: 900;
+            color: #d4af37;
+        }
+
+        .total-yearly {
+            text-align: right;
+            font-size: 1.1rem;
+            color: #22c55e;
+        }
+
+        /* Buttons */
+        .btn {
+            padding: 1rem 2rem;
+            border: none;
+            border-radius: 10px;
+            font-weight: 700;
+            cursor: pointer;
+            transition: all 0.3s;
+            font-size: 1rem;
+            width: 100%;
+            display: block;
+        }
+
+        .btn-primary {
+            background: linear-gradient(135deg, #d4af37, #c19b2a);
+            color: #000;
+        }
+
+        .btn-primary:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 30px rgba(212, 175, 55, 0.3);
+        }
+
+        .btn-secondary {
+            background: transparent;
+            border: 2px solid #d4af37;
+            color: #d4af37;
+            margin-top: 1rem;
+        }
+
+        .btn-secondary:hover {
+            background: rgba(212, 175, 55, 0.1);
+        }
+
+        .btn-back {
+            background: transparent;
+            color: #888;
+            margin-bottom: 1rem;
+            text-align: left;
+            padding: 0.5rem 1rem;
+        }
+
+        .btn-back:hover {
+            color: #d4af37;
+        }
+
+        /* Hidden */
+        .hidden {
+            display: none !important;
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            body {
+                padding: 1rem 0.5rem;
+            }
+
+            h1 {
+                font-size: 2rem;
+            }
+
+            .card {
+                padding: 1.5rem;
+            }
+
+            .size-grid, .services-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .total-amount {
+                font-size: 2.5rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <!-- Header -->
+        <div class="header">
+            <div class="logo">
+                <svg class="logo-icon" viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
+                    <defs>
+                        <linearGradient id="logoGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+                            <stop offset="0%" style="stop-color:#d4af37"/>
+                            <stop offset="50%" style="stop-color:#f4e5b0"/>
+                            <stop offset="100%" style="stop-color:#d4af37"/>
+                        </linearGradient>
+                    </defs>
+                    <circle cx="50" cy="50" r="48" fill="none" stroke="url(#logoGrad)" stroke-width="2" opacity="0.3"/>
+                    <path d="M 50 50 Q 50 35, 35 35 T 20 35 Q 20 50, 35 50 T 65 50 Q 65 20, 35 20 T 10 20 Q 10 80, 60 80 T 90 80 Q 90 10, 35 10" 
+                          stroke="url(#logoGrad)" stroke-width="3" fill="none" stroke-linecap="round"/>
+                </svg>
+                <div class="logo-text">EAR LAB</div>
+            </div>
+            <h1>Calcola il <span class="gradient-text">Tuo Prezzo</span></h1>
+            <p class="subtitle">Prezzi su misura per la tua attività</p>
+        </div>
+
+        <!-- Progress Steps -->
+        <div class="steps" id="steps">
+            <div class="step active" id="step1">
+                <div class="step-number">1</div>
+                <span>Dimensione</span>
+            </div>
+            <div class="step" id="step2">
+                <div class="step-number">2</div>
+                <span>Dettagli</span>
+            </div>
+            <div class="step" id="step3">
+                <div class="step-number">3</div>
+                <span>Servizi</span>
+            </div>
+            <div class="step" id="step4">
+                <div class="step-number">4</div>
+                <span>Riepilogo</span>
+            </div>
+        </div>
+
+        <!-- Step 1: Size Selection -->
+        <div id="sizeStep" class="card">
+            <h2>Qual è la dimensione della tua attività?</h2>
+            <div class="size-grid">
+                <div class="size-card" onclick="selectSize('micro')">
+                    <div class="size-emoji">🏪</div>
+                    <div class="size-name">Micro Business</div>
+                    <div class="size-desc">1 negozio, fino a 10 dipendenti</div>
+                    <div class="size-specs">
+                        <div class="size-spec">
+                            <div class="size-spec-label">Negozi</div>
+                            <div class="size-spec-value">1</div>
+                        </div>
+                        <div class="size-spec">
+                            <div class="size-spec-label">Dipendenti</div>
+                            <div class="size-spec-value">1-10</div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="size-card" onclick="selectSize('small')">
+                    <div class="size-emoji">🏬</div>
+                    <div class="size-name">Small Business</div>
+                    <div class="size-desc">2-5 negozi, fino a 50 dipendenti</div>
+                    <div class="size-specs">
+                        <div class="size-spec">
+                            <div class="size-spec-label">Negozi</div>
+                            <div class="size-spec-value">2-5</div>
+                        </div>
+                        <div class="size-spec">
+                            <div class="size-spec-label">Dipendenti</div>
+                            <div class="size-spec-value">11-50</div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="size-card" onclick="selectSize('medium')">
+                    <div class="size-emoji">🏢</div>
+                    <div class="size-name">Medium Business</div>
+                    <div class="size-desc">6-20 negozi, fino a 200 dipendenti</div>
+                    <div class="size-specs">
+                        <div class="size-spec">
+                            <div class="size-spec-label">Negozi</div>
+                            <div class="size-spec-value">6-20</div>
+                        </div>
+                        <div class="size-spec">
+                            <div class="size-spec-label">Dipendenti</div>
+                            <div class="size-spec-value">51-200</div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="size-card" onclick="selectSize('enterprise')">
+                    <div class="size-emoji">🏛️</div>
+                    <div class="size-name">Enterprise</div>
+                    <div class="size-desc">20+ negozi, 200+ dipendenti</div>
+                    <div class="size-specs">
+                        <div class="size-spec">
+                            <div class="size-spec-label">Negozi</div>
+                            <div class="size-spec-value">20+</div>
+                        </div>
+                        <div class="size-spec">
+                            <div class="size-spec-label">Dipendenti</div>
+                            <div class="size-spec-value">200+</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Step 2: Details -->
+        <div id="detailsStep" class="card hidden">
+            <button class="btn btn-back" onclick="goToStep('size')">← Torna indietro</button>
+            <h2>Personalizza la tua configurazione</h2>
+            
+            <div class="slider-group">
+                <div class="slider-label">
+                    <span>Numero di Negozi</span>
+                    <span class="slider-value" id="storesValue">1</span>
+                </div>
+                <input type="range" id="storesSlider" min="1" max="20" value="1" oninput="updateSlider('stores')">
+                <div class="slider-range">
+                    <span>1</span>
+                    <span id="storesMax">20</span>
+                </div>
+            </div>
+
+            <div class="slider-group">
+                <div class="slider-label">
+                    <span>Numero di Dipendenti</span>
+                    <span class="slider-value" id="employeesValue">5</span>
+                </div>
+                <input type="range" id="employeesSlider" min="1" max="200" value="5" oninput="updateSlider('employees')">
+                <div class="slider-range">
+                    <span>1</span>
+                    <span id="employeesMax">200</span>
+                </div>
+            </div>
+
+            <button class="btn btn-primary" onclick="goToStep('services')">Continua ai Servizi →</button>
+        </div>
+
+        <!-- Step 3: Services -->
+        <div id="servicesStep" class="card hidden">
+            <button class="btn btn-back" onclick="goToStep('details')">← Torna indietro</button>
+            <h2>Seleziona i servizi che ti interessano</h2>
+            <p style="color: #888; margin-bottom: 2rem;">
+                <span id="configText"></span>
+            </p>
+            <div class="services-grid" id="servicesGrid">
+                <!-- Services will be populated by JavaScript -->
+            </div>
+            <button class="btn btn-primary" onclick="goToStep('summary')" style="margin-top: 2rem;">Vedi Riepilogo →</button>
+        </div>
+
+        <!-- Step 4: Summary -->
+        <div id="summaryStep" class="card hidden">
+            <button class="btn btn-back" onclick="goToStep('services')">← Modifica servizi</button>
+            <div class="summary-card">
+                <h2 style="text-align: center; margin-bottom: 2rem;">🎯 Il Tuo Preventivo Personalizzato</h2>
+                
+                <div class="config-summary">
+                    <div class="config-item">
+                        <div class="config-emoji" id="summaryEmoji"></div>
+                        <div class="config-label">Piano</div>
+                        <div class="config-value" id="summarySize"></div>
+                    </div>
+                    <div class="config-item">
+                        <div class="config-emoji">🏪</div>
+                        <div class="config-label">Negozi</div>
+                        <div class="config-value" id="summaryStores"></div>
+                    </div>
+                    <div class="config-item">
+                        <div class="config-emoji">👥</div>
+                        <div class="config-label">Dipendenti</div>
+                        <div class="config-value" id="summaryEmployees"></div>
+                    </div>
+                </div>
+
+                <div class="services-list" id="summaryServices">
+                    <!-- Selected services will be listed here -->
+                </div>
+
+                <div class="total-section">
+                    <div class="total-row">
+                        <div class="total-label">Totale Mensile</div>
+                        <div class="total-amount" id="totalMonthly">€0</div>
+                    </div>
+                    <div class="total-yearly">
+                        Totale Annuale: <strong id="totalYearly">€0</strong>
+                    </div>
+                </div>
+
+                <button class="btn btn-primary" onclick="window.location.href='launch.html'">
+                    Inizia 7 Giorni Gratis →
+                </button>
+                <button class="btn btn-secondary" onclick="location.reload()">
+                    Ricomincia Preventivo
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        const state = {
+            size: null,
+            stores: 1,
+            employees: 5,
+            selectedServices: []
+        };
+
+        const sizes = {
+            micro: { name: 'Micro Business', emoji: '🏪', maxStores: 1, maxEmployees: 10, multiplier: 1 },
+            small: { name: 'Small Business', emoji: '🏬', maxStores: 5, maxEmployees: 50, multiplier: 1.5 },
+            medium: { name: 'Medium Business', emoji: '🏢', maxStores: 20, maxEmployees: 200, multiplier: 2.5 },
+            enterprise: { name: 'Enterprise', emoji: '🏛️', maxStores: 999, maxEmployees: 9999, multiplier: 0 }
+        };
+
+        const services = {
+            maestro: { emoji: '📊', name: 'Maestro Negozio', tagline: 'Gamification & Task', basePrice: 79, features: ['Punti e badges', 'Task giornaliere', 'Feedback anonimo', 'Analytics AI'] },
+            chat: { emoji: '💬', name: 'Chat Team', tagline: 'Comunicazione Sicura', basePrice: 99, features: ['Crittografia E2E', 'Database privato', 'File sharing', 'Check-in/out'] },
+            whatsapp: { emoji: '📱', name: 'WhatsApp Marketing', tagline: 'Bulk Sender', basePrice: 29, features: ['100 msg/mese', 'Template', 'Segmentazione', 'Analytics'] },
+            sito: { emoji: '🌐', name: 'Sito Web', tagline: 'Design + Hosting', basePrice: 200, features: ['Design responsive', 'Hosting + SSL', 'Modifiche incluse', 'Blog'] },
+            promo: { emoji: '🎁', name: 'Premi & Promo', tagline: 'Fidelizzazione', basePrice: 69, features: ['Coupon digitali', 'Carte fedeltà', 'QR codes', 'Analytics'] },
+            drive: { emoji: '☁️', name: 'Drive Aziendale', tagline: 'Storage Cloud', basePrice: 39, features: ['100GB inclusi', 'Condivisione', 'Versioning', 'Backup'] }
+        };
+
+        function selectSize(size) {
+            state.size = size;
+            
+            if (size === 'enterprise') {
+                alert('Per soluzioni Enterprise, ti contatteremo per un preventivo personalizzato.\n\nEmail: info@earlab.it');
+                return;
+            }
+
+            const sizeData = sizes[size];
+            document.getElementById('storesSlider').max = sizeData.maxStores;
+            document.getElementById('storesMax').textContent = sizeData.maxStores;
+            document.getElementById('employeesSlider').max = sizeData.maxEmployees;
+            document.getElementById('employeesMax').textContent = sizeData.maxEmployees;
+            
+            state.stores = Math.min(state.stores, sizeData.maxStores);
+            state.employees = Math.min(state.employees, sizeData.maxEmployees);
+            
+            updateSlider('stores');
+            updateSlider('employees');
+            
+            goToStep('details');
+        }
+
+        function updateSlider(type) {
+            if (type === 'stores') {
+                state.stores = parseInt(document.getElementById('storesSlider').value);
+                document.getElementById('storesValue').textContent = state.stores;
+            } else {
+                state.employees = parseInt(document.getElementById('employeesSlider').value);
+                document.getElementById('employeesValue').textContent = state.employees;
+            }
+        }
+
+        function calculatePrice(basePrice) {
+            const sizeData = sizes[state.size];
+            if (sizeData.multiplier === 0) return 'Custom';
+            
+            let price = basePrice * sizeData.multiplier;
+            
+            if (state.stores > 1) {
+                const storeCost = state.size === 'small' ? 30 : 25;
+                price += (state.stores - 1) * storeCost;
+            }
+            
+            const baseEmployees = 10;
+            if (state.employees > baseEmployees) {
+                const empCost = state.size === 'small' ? 2 : 1.5;
+                price += (state.employees - baseEmployees) * empCost;
+            }
+            
+            if (state.size === 'medium') {
+                price *= 0.85; // 15% volume discount
+            }
+            
+            return Math.round(price);
+        }
+
+        function renderServices() {
+            const grid = document.getElementById('servicesGrid');
+            const sizeData = sizes[state.size];
+            document.getElementById('configText').textContent = `${sizeData.name} • ${state.stores} negozi • ${state.employees} dipendenti`;
+            
+            grid.innerHTML = '';
+            
+            Object.keys(services).forEach(key => {
+                const service = services[key];
+                const price = calculatePrice(service.basePrice);
+                const isSelected = state.selectedServices.includes(key);
+                
+                const card = document.createElement('div');
+                card.className = 'service-card' + (isSelected ? ' selected' : '');
+                card.onclick = () => toggleService(key);
+                
+                card.innerHTML = `
+                    <div class="service-header">
+                        <div class="service-emoji">${service.emoji}</div>
+                        <div class="service-info">
+                            <h3>${service.name}</h3>
+                            <div class="service-tagline">${service.tagline}</div>
+                        </div>
+                    </div>
+                    <ul class="service-features">
+                        ${service.features.map(f => `<li>${f}</li>`).join('')}
+                    </ul>
+                    <div class="service-price">
+                        <div>
+                            <div class="price-amount">€${price}</div>
+                            <div class="price-period">/mese</div>
+                        </div>
+                    </div>
+                `;
+                
+                grid.appendChild(card);
+            });
+        }
+
+        function toggleService(serviceKey) {
+            const index = state.selectedServices.indexOf(serviceKey);
+            if (index > -1) {
+                state.selectedServices.splice(index, 1);
+            } else {
+                state.selectedServices.push(serviceKey);
+            }
+            renderServices();
+        }
+
+        function renderSummary() {
+            const sizeData = sizes[state.size];
+            document.getElementById('summaryEmoji').textContent = sizeData.emoji;
+            document.getElementById('summarySize').textContent = sizeData.name;
+            document.getElementById('summaryStores').textContent = state.stores;
+            document.getElementById('summaryEmployees').textContent = state.employees;
+            
+            const servicesList = document.getElementById('summaryServices');
+            servicesList.innerHTML = '<h3 style="margin-bottom: 1rem; color: #d4af37;">Servizi Selezionati:</h3>';
+            
+            let total = 0;
+            
+            state.selectedServices.forEach(key => {
+                const service = services[key];
+                const price = calculatePrice(service.basePrice);
+                total += price;
+                
+                const item = document.createElement('div');
+                item.className = 'service-item';
+                item.innerHTML = `
+                    <div>
+                        <span style="font-size: 1.5rem; margin-right: 0.5rem;">${service.emoji}</span>
+                        <span class="service-name">${service.name}</span>
+                    </div>
+                    <div class="service-cost">€${price}</div>
+                `;
+                servicesList.appendChild(item);
+            });
+            
+            if (state.selectedServices.length === 0) {
+                servicesList.innerHTML += '<p style="color: #888; text-align: center; padding: 2rem;">Nessun servizio selezionato</p>';
+            }
+            
+            document.getElementById('totalMonthly').textContent = `€${total}`;
+            document.getElementById('totalYearly').textContent = `€${total * 12}`;
+        }
+
+        function goToStep(step) {
+            // Hide all steps
+            document.getElementById('sizeStep').classList.add('hidden');
+            document.getElementById('detailsStep').classList.add('hidden');
+            document.getElementById('servicesStep').classList.add('hidden');
+            document.getElementById('summaryStep').classList.add('hidden');
+            
+            // Update progress
+            document.querySelectorAll('.step').forEach(s => s.classList.remove('active'));
+            
+            // Show selected step
+            switch(step) {
+                case 'size':
+                    document.getElementById('sizeStep').classList.remove('hidden');
+                    document.getElementById('step1').classList.add('active');
+                    break;
+                case 'details':
+                    document.getElementById('detailsStep').classList.remove('hidden');
+                    document.getElementById('step2').classList.add('active');
+                    break;
+                case 'services':
+                    renderServices();
+                    document.getElementById('servicesStep').classList.remove('hidden');
+                    document.getElementById('step3').classList.add('active');
+                    break;
+                case 'summary':
+                    renderSummary();
+                    document.getElementById('summaryStep').classList.remove('hidden');
+                    document.getElementById('step4').classList.add('active');
+                    break;
+            }
+        }
+    </script>
+</body>
+  </html>
